@@ -147,10 +147,40 @@ def my_none
             p true
         end
     end
-end
+
 coll_arr = [-4, 5, -2, -8]
 
 coll_arr.my_none do |el|
 
    el > 0
 end
+
+# my_count
+
+def my_count 
+
+    return self.dup unless block_given?
+    i = 0
+    # arr_check = []
+    counter = 0
+    until i == self.size
+       incount = yield(self[i])
+if incount.include?(i)
+    counter += 1
+else
+    self
+end
+
+      i += 1
+    end
+   p counter
+    end
+end
+end
+coll_arr = [-4, 5, -2, -8]
+
+coll_arr.my_count do |el|
+
+  if el > 0
+    el
+  end
