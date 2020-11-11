@@ -89,7 +89,7 @@ def my_all
     end
   end
    
-end
+
 d = [4, -5, 2, 8]
 
 d.my_all do |el|
@@ -97,4 +97,29 @@ d.my_all do |el|
    el > 0
 end
 
+#  my_any
+
+def my_any
+
+    return self.dup unless block_given?
+
+    i = 0
+    arr_res = []
+    until i == self.size
+     arr_res << yield(self[i])
+        i += 1
+    end  
+    if arr_res.include?(true)
+      p true
+    else
+     p false
+    end
+  end
+end
+d = [-4, 5, -2, -8]
+
+d.my_any do |el|
+
+   el > 0
+end
 
