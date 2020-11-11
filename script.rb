@@ -68,6 +68,7 @@ end
 
 end
 
+puts
 
 # my_all
 
@@ -115,7 +116,7 @@ def my_any
      p false
     end
   end
-end
+
 d = [-4, 5, -2, -8]
 
 d.my_any do |el|
@@ -123,3 +124,33 @@ d.my_any do |el|
    el > 0
 end
 
+puts 
+
+# my_none
+
+def my_none 
+
+    return self.dup unless block_given?
+
+    i = 0
+    arr_check = []
+
+    until i == self.size 
+
+        arr_check.push(yield(self[i]))
+
+        i += 1
+    end
+        if arr_check.include?(true)
+            p false
+        else
+            p true
+        end
+    end
+end
+coll_arr = [-4, 5, -2, -8]
+
+coll_arr.my_none do |el|
+
+   el > 0
+end
