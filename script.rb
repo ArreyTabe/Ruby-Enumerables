@@ -22,6 +22,7 @@ test_collect.my_each do |el|
     
 end
 
+puts
 # my_each_with_index
 
 def my_each_with_index
@@ -42,6 +43,10 @@ test_collect.my_each_with_index  do |el,index|
    puts "index #{index} for #{el}" 
 end
 
+puts
+
+# my_select
+
 def my_select
     return self.dup unless block_given?
     selected_array = []
@@ -53,7 +58,7 @@ def my_select
   selected_array
 
 end
-end
+
 
   test_collect = ["binta", "gabru", "sharon"]
 
@@ -62,3 +67,34 @@ end
 
 
 end
+
+
+# my_all
+
+
+def my_all
+
+    return self.dup unless block_given?
+
+    i = 0
+    arr_res = []
+    until i == self.size
+     arr_res << yield(self[i])
+        i += 1
+    end  
+    if arr_res.include?(false)
+      p false
+    else
+     p true
+    end
+  end
+   
+end
+d = [4, -5, 2, 8]
+
+d.my_all do |el|
+
+   el > 0
+end
+
+
