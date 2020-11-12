@@ -189,7 +189,7 @@ end
  new_array
 
 end
-end
+
 
 test_collect = [3, 4, 5]
 
@@ -203,8 +203,10 @@ puts
 
 
 def my_inject(accumulator, &block)
+  i = 0
  until i == self.size
     accumulator = block.call(accumulator, element)
   end
   accumulator
 end
+
