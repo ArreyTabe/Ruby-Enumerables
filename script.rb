@@ -200,3 +200,11 @@ test_collect.my_map do |el|
 end
 
 puts
+
+
+def my_inject(accumulator, &block)
+ until i == self.size
+    accumulator = block.call(accumulator, element)
+  end
+  accumulator
+end
