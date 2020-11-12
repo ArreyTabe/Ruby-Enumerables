@@ -174,4 +174,29 @@ def my_count(*arg)
   count = 0
   my_each { |ele| count += 1 if yield ele }
   count
-end 
+end
+
+# my_map
+
+def my_map
+  return self.dup unless block_given?
+  new_array = []
+  i = 0 
+  until i == self.size
+      new_array<< yield(self[i])
+  i +=1
+end
+ new_array
+
+end
+end
+
+test_collect = [3, 4, 5]
+
+test_collect.my_map do |el|
+     puts el + 2
+
+
+end
+
+puts
