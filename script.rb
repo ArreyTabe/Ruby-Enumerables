@@ -157,30 +157,21 @@ end
 
 # my_count
 
-def my_count 
-
-    return self.dup unless block_given?
-    i = 0
-    # arr_check = []
-    counter = 0
-    until i == self.size
-       incount = yield(self[i])
-if incount.include?(i)
-    counter += 1
-else
-    self
-end
-
-      i += 1
+def my_count(*arg)
+  if arg.length.positive?
+    count = 0
+    my_each do |ele|
+      count += 1 if ele == arg[0]
     end
-   p counter
+    return count
+  elsif arg.length.zero? && !block_given?
+    count = 0
+    my_each do |_ele|
+      count += 1
     end
-end
-end
-coll_arr = [-4, 5, -2, -8]
-
-coll_arr.my_count do |el|
-
-  if el > 0
-    el
+    return count
   end
+  count = 0
+  my_each { |ele| count += 1 if yield ele }
+  count
+end 
