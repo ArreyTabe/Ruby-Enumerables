@@ -134,6 +134,8 @@ module Enumerable
 
   coll_arr.my_none(&:positive?)
 
+  rubocop:disable Metrics/CyclomaticComplexity
+
   def my_count(*arg)
     if arg.length.positive?
       count = 0
@@ -169,6 +171,7 @@ module Enumerable
   end
 
   puts
+  
    rubocop:disable Metrics/CyclomaticComplexity
 
 
