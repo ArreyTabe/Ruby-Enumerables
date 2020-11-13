@@ -1,246 +1,198 @@
+# frozen_string_literal: true
+
 module Enumerable
+  def my_each
+    return to_enum(:my_each) unless block_given?
 
-    
-    def my_each
-       return to_enum(:my_each) unless block_given?
-        i = 0
-        until i == self.size
-            yield  self[i]
+    i = 0
+    until i == size
+      yield self[i]
 
-            i += 1
-        end
-       self
+      i += 1
     end
-
-
-test_collect = ["goond","young", "lappy", "shangai"]
-
-
-test_collect.my_each do |el|
-    puts "The test array contains the nonsense #{el}"
-
-    
-end
-
-puts
-# my_each_with_index
-
-def my_each_with_index
-
-  return to_enum(:my_each) unless block_given?
-      i = 0 
-      until i == self.size
-          yield(self[i], i)
-          i +=1
-      end
-      self
+    self
   end
 
+  test_collect = %w[goond young lappy shangai]
 
+  test_collect.my_each do |el|
+    puts "The test array contains the nonsense #{el}"
+  end
 
-test_collect = [23,34,56,78,45]
+  puts
+  # my_each_with_index
 
-test_collect.my_each_with_index  do |el,index|
-   puts "index #{index} for #{el}" 
-end
+  def my_each_with_index
+    return to_enum(:my_each) unless block_given?
 
-puts
+    i = 0
+    until i == size
+      yield(self[i], i)
+      i += 1
+    end
+    self
+  end
 
-# my_select
+  test_collect = [23, 34, 56, 78, 45]
 
-def my_select
-  return to_enum(:my_select) unless block_given?
+  test_collect.my_each_with_index do |el, index|
+    puts "index #{index} for #{el}"
+  end
+
+  puts
+
+  # my_select
+
+  def my_select
+    return to_enum(:my_select) unless block_given?
 
     selected_array = []
-    i = 0 
-    until i == self.size
-        selected_array<< yield(self[i])
-    i +=1
+    i = 0
+    until i == size
+      selected_array << yield(self[i])
+      i += 1
+    end
+    selected_array
   end
-  selected_array
 
-end
-
-
-  test_collect = ["binta", "gabru", "sharon"]
+  test_collect = %w[binta gabru sharon]
 
   test_collect.my_select do |el|
-      puts el if el != "sharon"
+    puts el if el != 'sharon'
+  end
 
+  puts
 
-end
+  # my_all
 
-puts
-
-# my_all
-
-
-def my_all
-
-    return self.dup unless block_given?
+  def my_all
+    return dup unless block_given?
 
     i = 0
     arr_res = []
-    until i == self.size
-     arr_res << yield(self[i])
-        i += 1
-    end  
-    if ((arr_res.include?(false)) && (arr_res.include?(nil)))
+    until i == size
+      arr_res << yield(self[i])
+      i += 1
+    end
+    if arr_res.include?(false) && arr_res.include?(nil)
       p false
     else
-     p true
+      p true
     end
   end
-   
 
-d = [4, -5, 2, 8]
+  d = [4, -5, 2, 8]
 
-d.my_all do |el|
+  d.my_all(&:positive?)
 
-   el > 0
-end
+  #  my_any
 
-#  my_any
-
-def my_any
-
-    return self.dup unless block_given?
+  def my_any
+    return dup unless block_given?
 
     i = 0
     arr_res = []
-    until i == self.size
-     arr_res << yield(self[i])
-        i += 1
-    end  
+    until i == size
+      arr_res << yield(self[i])
+      i += 1
+    end
     if arr_res.include?(true)
       p true
     else
-     p false
+      p false
     end
   end
 
-d = [-4, 5, -2, -8]
+  d = [-4, 5, -2, -8]
 
-d.my_any do |el|
+  d.my_any(&:positive?)
 
-   el > 0
-end
+  puts
 
-puts 
+  # my_none
 
-# my_none
-
-def my_none 
-
-    return self.dup unless block_given?
+  def my_none
+    return dup unless block_given?
 
     i = 0
     arr_check = []
 
-    until i == self.size 
+    until i == size
 
-        arr_check.push(yield(self[i]))
+      arr_check.push(yield(self[i]))
 
-        i += 1
+      i += 1
     end
-        if arr_check.include?(true)
-            p false
-        else
-            p true
-        end
+    if arr_check.include?(true)
+      p false
+    else
+      p true
     end
+  end
 
-coll_arr = [-4, 5, -2, -8]
+  coll_arr = [-4, 5, -2, -8]
 
-coll_arr.my_none do |el|
+  coll_arr.my_none(&:positive?)
 
-   el > 0
-end
-
-
-
-def my_count(*arg)
-  if arg.length.positive?
+  def my_count(*arg)
+    if arg.length.positive?
+      count = 0
+      my_each do |ele|
+        count += 1 if ele == arg[0]
+      end
+      return count
+    elsif arg.length.zero? && !block_given?
+      count = 0
+      my_each do |_ele|
+        count += 1
+      end
+      return count
+    end
     count = 0
-    my_each do |ele|
-      count += 1 if ele == arg[0]
+    my_each { |ele| count += 1 if yield ele }
+    count
+
+    # my_map
+
+    def my_map(proc = nil)
+      return to_enum(:my_map) unless block_given?
+
+      new_array = []
+
+      if proc.nil?
+        my_each { new_array << yield(self[i]) }
+      else
+        my_each new_array << proc.call(self[i])
+      end
+      new_array
     end
-    return count
-  elsif arg.length.zero? && !block_given?
-    count = 0
-    my_each do |_ele|
-      count += 1
+  end
+
+  puts
+
+  def my_inject(arg = nil, sym = nil)
+    if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
+      sym = arg
+      arg = nil
     end
-    return count
-  end
-  count = 0
-  my_each { |ele| count += 1 if yield ele }
-  count
-end
 
+    if block_given? && sym.nil?
 
-    
+      my_each { |elt| arg = arg.nil? ? elt : yield(arg, elt) }
 
-# my_map
+    else
 
-def my_map(proc = nil)
-  return to_enum(:my_map) unless block_given?
-  new_array = []
-  i = 0 
- 
-  if proc.nil?
-    until i == self.size
-     self.my_each { new_array<< yield(self[i])}
-  else
-    self.my_each new_array << proc.call(self[i])
-  i +=1
+      my_each { |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
+
+    end
+    arg
   end
 end
- new_array
 
-end
-
-
-test_collect = [3, 4, 5]
-
-test_collect.my_map do |el|
-     puts el + 2
-
-
-end
-
-puts
-
-
-def my_inject(arg = nil, sym = nil)
-  if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
-    sym = arg
-    arg = nil
+def multiply_els(arr_)
+  arr_.my_inject do |accum, el|
+    accum * el
   end
-
- 
-  if block_given? && sym.nil?
-      
-  my_each{ |elt| arg = arg.nil? ? elt : yield(arg, elt) }
- 
-  else
-    
-    my_each{ |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
-
-  end
-  arg
-end
 end
 
-
-
-def multiply_els(arr_) 
- 
-  arr_.my_inject {|accum,el| 
-  accum * el
-}
-end
-
-p multiply_els([5, 6,2])
-
-
+p multiply_els([5, 6, 2])
