@@ -183,13 +183,18 @@ end
 
 # my_map
 
-def my_map
-  return self.dup unless block_given?
+def my_map(proc = nil)
+  return to_enum(:my_map) unless block_given?
   new_array = []
   i = 0 
-  until i == self.size
-      new_array<< yield(self[i])
+ 
+  if proc.nil?
+    until i == self.size
+     self.my_each { new_array<< yield(self[i])}
+  else
+    self.my_each new_array << proc.call(self[i])
   i +=1
+  end
 end
  new_array
 
