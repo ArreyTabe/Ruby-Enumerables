@@ -170,7 +170,7 @@ module Enumerable
 
   puts
 
-  def my_inject(arg = nil, sym = nil)
+  def my_inject(arg, sym)
     if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
       sym = arg
       arg = nil
