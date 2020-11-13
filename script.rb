@@ -134,8 +134,6 @@ module Enumerable
 
   coll_arr.my_none(&:positive?)
 
-  rubocop:disable Metrics/CyclomaticComplexity
-
   def my_count(*arg)
     if arg.length.positive?
       count = 0
@@ -171,9 +169,6 @@ module Enumerable
   end
 
   puts
-  
-   rubocop:disable Metrics/CyclomaticComplexity
-
 
   def my_inject(arg = nil, sym = nil)
     if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
@@ -193,8 +188,6 @@ module Enumerable
     arg
   end
 end
-
-#  rubocop:enable Metrics/CyclomaticComplexity
 
 def multiply_els(arr_)
   arr_.my_inject do |accum, el|
