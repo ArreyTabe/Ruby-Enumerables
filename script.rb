@@ -2,7 +2,7 @@ module Enumerable
 
     
     def my_each
-       return self.dup unless block_given?
+       return to_enum(:my_each) unless block_given?
         i = 0
         until i == self.size
             yield  self[i]
@@ -26,10 +26,11 @@ puts
 # my_each_with_index
 
 def my_each_with_index
-    return self.dup unless block_given?
+
+  return to_enum(:my_each) unless block_given?
       i = 0 
       until i == self.size
-          yield self[i]
+          yield(self[i], i)
           i +=1
       end
       self
@@ -48,7 +49,8 @@ puts
 # my_select
 
 def my_select
-    return self.dup unless block_given?
+  return to_enum(:my_select) unless block_given?
+
     selected_array = []
     i = 0 
     until i == self.size
@@ -83,7 +85,7 @@ def my_all
      arr_res << yield(self[i])
         i += 1
     end  
-    if arr_res.include?(false)
+    if ((arr_res.include?(false)) && (arr_res.include?(nil)))
       p false
     else
      p true
@@ -155,7 +157,7 @@ coll_arr.my_none do |el|
    el > 0
 end
 
-# my_count
+
 
 def my_count(*arg)
   if arg.length.positive?
@@ -175,6 +177,9 @@ def my_count(*arg)
   my_each { |ele| count += 1 if yield ele }
   count
 end
+
+
+    
 
 # my_map
 
@@ -202,11 +207,35 @@ end
 puts
 
 
-def my_inject(accumulator, &block)
-  i = 0
- until i == self.size
-    accumulator = block.call(accumulator, element)
+def my_inject(arg = nil, sym = nil)
+  if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
+    sym = arg
+    arg = nil
   end
-  accumulator
+
+ 
+  if block_given? && sym.nil?
+      
+  my_each{ |elt| arg = arg.nil? ? elt : yield(arg, elt) }
+ 
+  else
+    
+    my_each{ |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
+
+  end
+  arg
 end
+end
+
+
+
+def multiply_els(arr_) 
+ 
+  arr_.my_inject {|accum,el| 
+  accum * el
+}
+end
+
+p multiply_els([5, 6,2])
+
 
