@@ -169,8 +169,10 @@ module Enumerable
   end
 
   puts
+   rubocop:disable Metrics/CyclomaticComplexity
 
-  def my_inject(arg, sym)
+
+  def my_inject(arg = nil, sym = nil)
     if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
       sym = arg
       arg = nil
@@ -188,6 +190,8 @@ module Enumerable
     arg
   end
 end
+
+#  rubocop:enable Metrics/CyclomaticComplexity
 
 def multiply_els(arr_)
   arr_.my_inject do |accum, el|
