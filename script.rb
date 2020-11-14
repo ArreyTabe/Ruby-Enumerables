@@ -132,7 +132,7 @@ module Enumerable
 
   coll_arr.my_none(&:positive?)
 
-  def my_count(*arg)
+  def my_count(arg)
     if arg.length.positive?
       count = 0
       my_each do |ele|
@@ -168,7 +168,7 @@ module Enumerable
 
   puts
 
-  def my_inject(*arg)
+  def my_inject(arg)
     raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
 
     return Helper.block_not_given(self, arg) unless block_given?
