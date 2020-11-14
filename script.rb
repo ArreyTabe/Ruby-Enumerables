@@ -134,7 +134,7 @@ module Enumerable
 
   def my_count(arg)
     if arg.length.positive?
-      count = 0
+      # count = 0
       my_each do |ele|
         count += 1 if ele == arg[0]
       end
