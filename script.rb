@@ -10,8 +10,7 @@ module Enumerable
     end
     self
   end
-end
-=begin
+
   # my_each_with_index
 
   def my_each_with_index
@@ -166,4 +165,4 @@ def multiply_els(arr_)
     accum * el
   end
 end
-=end
+
