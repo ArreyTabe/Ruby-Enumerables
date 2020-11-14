@@ -15,6 +15,7 @@ module Enumerable
 
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
+
     i = 0
     until i == size
       yield(self[i], i)
@@ -22,7 +23,6 @@ module Enumerable
     end
     self
   end
-
 
   # my_select
 
@@ -37,7 +37,6 @@ module Enumerable
     end
     selected_array
   end
-
 
   # my_all
 
@@ -56,7 +55,6 @@ module Enumerable
       p true
     end
   end
-
 
   #  my_any
 
@@ -96,8 +94,6 @@ module Enumerable
       p true
     end
   end
-
- 
 
   # my_count
 
@@ -140,7 +136,6 @@ module Enumerable
   end
 end
 
-
 def my_inject(arg)
   raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
 
@@ -165,4 +160,3 @@ def multiply_els(arr_)
     accum * el
   end
 end
-
