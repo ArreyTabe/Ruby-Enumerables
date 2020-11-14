@@ -11,18 +11,11 @@ module Enumerable
     self
   end
 
-  test_collect = %w[goond young lappy shangai]
-
-  test_collect.my_each do |el|
-    puts "The test array contains the nonsense #{el}"
-  end
-
-  puts
+ 
   # my_each_with_index
 
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
-
     i = 0
     until i == size
       yield(self[i], i)
@@ -31,13 +24,6 @@ module Enumerable
     self
   end
 
-  test_collect = [23, 34, 56, 78, 45]
-
-  test_collect.my_each_with_index do |el, index|
-    puts "index #{index} for #{el}"
-  end
-
-  puts
 
   # my_select
 
@@ -53,13 +39,6 @@ module Enumerable
     selected_array
   end
 
-  test_collect = %w[binta gabru sharon]
-
-  test_collect.my_select do |el|
-    puts el if el != 'sharon'
-  end
-
-  puts
 
   # my_all
 
@@ -79,9 +58,6 @@ module Enumerable
     end
   end
 
-  d = [4, -5, 2, 8]
-
-  d.my_all(&:positive?)
 
   #  my_any
 
@@ -100,12 +76,6 @@ module Enumerable
       p false
     end
   end
-
-  d = [-4, 5, -2, -8]
-
-  d.my_any(&:positive?)
-
-  puts
 
   # my_none
 
@@ -128,9 +98,7 @@ module Enumerable
     end
   end
 
-  coll_arr = [-4, 5, -2, -8]
-
-  coll_arr.my_none(&:positive?)
+ 
 
   # my_count
 
@@ -173,7 +141,6 @@ module Enumerable
   end
 end
 
-puts
 
 def my_inject(arg)
   raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
@@ -200,4 +167,3 @@ def multiply_els(arr_)
   end
 end
 
-# p multiply_els([5, 6, 2])
