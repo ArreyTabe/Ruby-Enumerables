@@ -3,11 +3,13 @@ AllCops:
     - "Guardfile"
     - "Rakefile"
 
-  DisplayCopNames: true
+DisplayCopNames: true
 Metrics/CyclomaticComplexity:
   Max: 100
 Metrics/PerceivedComplexity:
   Max: 50
+Metrics/CyclomaticComplexity:
+  Enabled: false
 Layout/LineLength:
   Max: 120
 Metrics/MethodLength:
@@ -24,8 +26,6 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 150
 
-Metrics/CyclomaticComplexity:
-  Enabled: false
 
 Style/Documentation:
   Enabled: false
