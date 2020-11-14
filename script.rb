@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -170,22 +168,23 @@ module Enumerable
 
   puts
 
-  def my_inject(arg = nil, sym = nil)
-    if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
-      sym = arg
-      arg = nil
+  def my_inject(*arg)
+    raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
+
+    return Helper.block_not_given(self, arg) unless block_given?
+
+    # if block is given
+    if arg.length.positive?
+      accumulator = arg[0]
+      i = 0
+    elsif arg.length.zero?
+      accumulator = first
+      i = 1
     end
-
-    if block_given? && sym.nil?
-
-      my_each { |elt| arg = arg.nil? ? elt : yield(arg, elt) }
-
-    else
-
-      my_each { |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
-
+    (i..(size - 1)).my_each do |index|
+      accumulator = yield accumulator, *self[index]
     end
-    arg
+    accumulator
   end
 end
 
@@ -195,4 +194,4 @@ def multiply_els(arr_)
   end
 end
 
-p multiply_els([5, 6, 2])
+# p multiply_els([5, 6, 2])
