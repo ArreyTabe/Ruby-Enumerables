@@ -146,9 +146,9 @@ module Enumerable
       end
       return count
     end
-    count = 0
-    my_each { |ele| count += 1 if yield ele }
-    count
+    # count = 0
+    # my_each { |ele| count += 1 if yield ele }
+    # count
 
     # my_map
 

@@ -2,16 +2,21 @@ AllCops:
   Exclude:
     - "Guardfile"
     - "Rakefile"
-
-DisplayCopNames: true
-Metrics/PerceivedComplexity:
-  Max: 50
+Metrics/ModuleLength:
+ Enabled: false
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
 Metrics/CyclomaticComplexity:
+  Enabled: false
+  DisplayCopNames: true
+Metrics/PerceivedComplexity:
+    Enabled: false
+Lint/NestedMethodDefinition:
   Enabled: false
 Layout/LineLength:
   Max: 120
 Metrics/MethodLength:
-  Max: 20
+  Max: 40
 Metrics/AbcSize:
   Max: 50
 Metrics/ClassLength:
@@ -19,12 +24,6 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   ExcludedMethods: ['describe']
   Max: 30
-Metrics/MethodLength:
-  Max: 30
-Metrics/ModuleLength:
-  Max: 150
-
-
 Style/Documentation:
   Enabled: false
 Style/ClassAndModuleChildren:
@@ -37,7 +36,8 @@ Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
-
+Style/FrozenStringLiteralComment:
+  Enabled: false
 Layout/HashAlignment:
   EnforcedColonStyle: key
 Layout/ExtraSpacing:
@@ -55,8 +55,3 @@ Style/HashTransformKeys:
   Enabled: false
 Style/HashTransformValues:
   Enabled: false
-Lint/NestedMethodDefinition:
-  Enabled: false
-Lint/Void:
-  Enabled: false
-
