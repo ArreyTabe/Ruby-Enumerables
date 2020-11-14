@@ -132,60 +132,66 @@ module Enumerable
 
   coll_arr.my_none(&:positive?)
 
-  def my_count(arg)
-    if arg.length.positive?
-      # count = 0
+  # my_count
+
+  def my_count(*arg)
+    count = 0
+    if block_given?
+      my_each do |ele|
+        count += 1 if yield(ele)
+      end
+      count
+
+    elsif arg.length.positive?
+
       my_each do |ele|
         count += 1 if ele == arg[0]
       end
-      return count
+      count
     elsif arg.length.zero? && !block_given?
       count = 0
       my_each do |_ele|
         count += 1
       end
-      return count
-    end
-    # count = 0
-    # my_each { |ele| count += 1 if yield ele }
-    # count
-
-    # my_map
-
-    def my_map(proc = nil)
-      return to_enum(:my_map) unless block_given?
-
-      new_array = []
-
-      if proc.nil?
-        my_each { new_array << yield(self[i]) }
-      else
-        my_each new_array << proc.call(self[i])
-      end
-      new_array
+      count
     end
   end
 
-  puts
+  # my_map
 
-  def my_inject(arg)
-    raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
+  def my_map(proc = nil)
+    return to_enum(:my_map) unless block_given?
 
-    return Helper.block_not_given(self, arg) unless block_given?
+    new_array = []
 
-    # if block is given
-    if arg.length.positive?
-      accumulator = arg[0]
-      i = 0
-    elsif arg.length.zero?
-      accumulator = first
-      i = 1
+    if proc.nil?
+      my_each { new_array << yield(self[i]) }
+    else
+      my_each new_array << proc.call(self[i])
     end
-    (i..(size - 1)).my_each do |index|
-      accumulator = yield accumulator, *self[index]
-    end
-    accumulator
+    new_array
   end
+end
+
+puts
+
+def my_inject(arg)
+  raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
+
+  return Helper.block_not_given(self, arg) unless block_given?
+
+  # if block is given
+  if arg.length.positive?
+    accumulator = arg[0]
+    i = 0
+  elsif arg.length.zero?
+    accumulator = first
+    i = 1
+  end
+  (i..(size - 1)).my_each do |index|
+    accumulator = yield accumulator, *self[index]
+  end
+  accumulator
 end
 
 def multiply_els(arr_)
