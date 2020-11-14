@@ -5,7 +5,7 @@ AllCops:
 
   DisplayCopNames: true
 Metrics/CyclomaticComplexity:
-  Enabled: false
+  Max: 100
 Metrics/PerceivedComplexity:
   Max: 50
 Layout/LineLength:
@@ -24,7 +24,8 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 150
 
-
+Metrics/CyclomaticComplexity:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
