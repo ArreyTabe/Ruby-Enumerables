@@ -32,7 +32,7 @@ module Enumerable
     selected_array = []
     i = 0
     until i == size
-      selected_array<<self[i] if yield(self[i])
+      selected_array << self[i] if yield(self[i])
       i += 1
     end
     selected_array
@@ -40,37 +40,35 @@ module Enumerable
 
   # my_all
 
-  def my_all? (arg = nil)
-   
-    if block_given? 
-        my_each { |el| return false if yield(el) == false }  
-        return true
-        elsif arg.nil?
-        my_each {|k| return false if k.nil? || k == false}
-        elsif !arg.nil? && (arg.is_a? Class)
-         my_each { |k| return false if k.class != arg }
-        elsif !arg.nil? && arg.instance_of?(Regexp)
-        my_each { |k| return false unless arg.match(k) }
+  def my_all?(arg = nil)
+    if block_given?
+      my_each { |el| return false if yield(el) == false }
+      return true
+    elsif arg.nil?
+      my_each { |k| return false if k.nil? || k == false }
+    elsif !arg.nil? && (arg.is_a? Class)
+      my_each { |k| return false if k.class != arg }
+    elsif !arg.nil? && arg.instance_of?(Regexp)
+      my_each { |k| return false unless arg.match(k) }
     else
       my_each { |k| return false if k != arg }
     end
     true
-    end
-        
-        
+  end
+
   #  my_any
 
   def my_any?(arg = nil)
     if block_given?
-      my_each  { |el| return true if yield(el) }
+      my_each { |el| return true if yield(el) }
       return false
     end
     arg.nil? ? arg.class.to_s : my_any? { |el| el }
 
     if arg.class.to_s == 'Class'
-      my_each  { |el| return true if el.is_a? arg }
+      my_each { |el| return true if el.is_a? arg }
     elsif arg.class.to_s == 'Regexp'
-      my_each  { |el| return true if el =~ arg }
+      my_each { |el| return true if el =~ arg }
     elsif arg.nil?
       each { |el| return true if el }
     else
@@ -78,7 +76,6 @@ module Enumerable
     end
     false
   end
-
 
   # my_none
 
@@ -108,46 +105,40 @@ module Enumerable
         count += 1
       end
     end
-      count
-    end
+    count
+  end
+end
+
+# my_map
+
+def my_map(proc = nil)
+  return to_enum(:my_map) unless block_given?
+
+  new_array = []
+  arr_ = to_a
+
+  if proc.nil?
+
+    arr_.my_each { |i| new_array << yield(i) }
+  else
+    arr_.my_each { |i| new_array << proc.call(i) }
+
+  end
+  new_array
+end
+
+def my_inject(arg = nil, sym = nil)
+  if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
+    sym = arg
+    arg = nil
   end
 
-  # my_map
-
-  def my_map(proc = nil)
-    return to_enum(:my_map) unless block_given?
-
-    new_array = []
-     arr_ = to_a
-     
-    if proc.nil?
-    
-      arr_.my_each { |i| new_array<< yield(i)}
-    else
-       arr_.my_each{ |i| new_array << proc.call(i) }
-    
-    end
-    new_array
+  if !block_given? && !sym.nil?
+    my_each { |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
+  else
+    my_each { |elt| arg = arg.nil? ? elt : yield(arg, elt) }
   end
-  
-
-def my_inject(arg)
-  raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
-
-  return Helper.block_not_given(self, arg) unless block_given?
-
-  # if block is given
-  if arg.length.positive?
-    accumulator = arg[0]
-    i = 0
-  elsif arg.length.zero?
-    accumulator = first
-    i = 1
-  end
-  (i..(size - 1)).my_each do |index|
-    accumulator = yield accumulator, *self[index]
-  end
-  accumulator
+  arg
 end
 
 def multiply_els(arr_)
