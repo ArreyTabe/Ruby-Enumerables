@@ -62,19 +62,19 @@ module Enumerable
 
   def my_any?(arg = nil)
     if block_given?
-      each { |el| return true if yield(el) }
+      my_each  { |el| return true if yield(el) }
       return false
     end
     arg.nil? ? arg.class.to_s : my_any? { |el| el }
 
     if arg.class.to_s == 'Class'
-      each { |el| return true if el.is_a? arg }
+      my_each  { |el| return true if el.is_a? arg }
     elsif arg.class.to_s == 'Regexp'
-      each { |el| return true if el =~ arg }
+      my_each  { |el| return true if el =~ arg }
     elsif arg.nil?
       each { |el| return true if el }
     else
-      each { |el| return true if el == arg }
+      my_each { |el| return true if el == arg }
     end
     false
   end
@@ -85,7 +85,7 @@ module Enumerable
   def my_none?(arg = nil, &block)
     !my_any?(arg, &block)
   end
-  
+
   # my_count
 
   def my_count(*arg)
@@ -107,6 +107,7 @@ module Enumerable
       my_each do |_ele|
         count += 1
       end
+    end
       count
     end
   end
@@ -117,15 +118,18 @@ module Enumerable
     return to_enum(:my_map) unless block_given?
 
     new_array = []
-
+     arr_ = to_a
+     
     if proc.nil?
-      my_each { new_array << yield(self[i]) }
+    
+      arr_.my_each { |i| new_array<< yield(i)}
     else
-      my_each new_array << proc.call(self[i])
+       arr_.my_each{ |i| new_array << proc.call(i) }
+    
     end
     new_array
   end
-end
+  
 
 def my_inject(arg)
   raise LocalJumpError, 'no block given?' unless block_given? || arg.length.positive?
