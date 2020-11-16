@@ -60,21 +60,25 @@ module Enumerable
         
   #  my_any
 
-  def my_any
-    return dup unless block_given?
+  def my_any?(arg = nil)
+    if block_given?
+      each { |el| return true if yield(el) }
+      return false
+    end
+    arg.nil? ? arg.class.to_s : my_any? { |el| el }
 
-    i = 0
-    arr_res = []
-    until i == size
-      arr_res << yield(self[i])
-      i += 1
-    end
-    if arr_res.include?(true)
-      p true
+    if arg.class.to_s == 'Class'
+      each { |el| return true if el.is_a? arg }
+    elsif arg.class.to_s == 'Regexp'
+      each { |el| return true if el =~ arg }
+    elsif arg.nil?
+      each { |el| return true if el }
     else
-      p false
+      each { |el| return true if el == arg }
     end
+    false
   end
+end
 
   # my_none
 
