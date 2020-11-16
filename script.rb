@@ -32,7 +32,7 @@ module Enumerable
     selected_array = []
     i = 0
     until i == size
-      selected_array << yield(self[i])
+      selected_array <<self[i] yield(self[i])
       i += 1
     end
     selected_array
