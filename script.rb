@@ -32,7 +32,7 @@ module Enumerable
     selected_array = []
     i = 0
     until i == size
-      selected_array <<self[i] yield(self[i])
+      selected_array<<self[i] if yield(self[i])
       i += 1
     end
     selected_array
@@ -40,22 +40,24 @@ module Enumerable
 
   # my_all
 
-  def my_all
-    return dup unless block_given?
-
-    i = 0
-    arr_res = []
-    until i == size
-      arr_res << yield(self[i])
-      i += 1
-    end
-    if arr_res.include?(false) && arr_res.include?(nil)
-      p false
+  def my_all? (arg = nil)
+   
+    if block_given? 
+        my_each { |el| return false if yield(el) == false }  
+        return true
+        elsif arg.nil?
+        my_each {|k| return false if k.nil? || k == false}
+        elsif !arg.nil? && (arg.is_a? Class)
+         my_each { |k| return false if k.class != arg }
+        elsif !arg.nil? && arg.instance_of?(Regexp)
+        my_each { |k| return false unless arg.match(k) }
     else
-      p true
+      my_each { |k| return false if k != arg }
     end
-  end
-
+    true
+    end
+        
+        
   #  my_any
 
   def my_any
