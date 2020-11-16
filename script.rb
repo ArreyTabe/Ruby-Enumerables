@@ -78,29 +78,14 @@ module Enumerable
     end
     false
   end
-end
+
 
   # my_none
 
-  def my_none
-    return dup unless block_given?
-
-    i = 0
-    arr_check = []
-
-    until i == size
-
-      arr_check.push(yield(self[i]))
-
-      i += 1
-    end
-    if arr_check.include?(true)
-      p false
-    else
-      p true
-    end
+  def my_none?(arg = nil, &block)
+    !my_any?(arg, &block)
   end
-
+  
   # my_count
 
   def my_count(*arg)
