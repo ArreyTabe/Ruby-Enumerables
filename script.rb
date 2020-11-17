@@ -56,6 +56,8 @@ module Enumerable
       my_each { |k| return false if k.class != arg }
     elsif !arg.nil? && arg.instance_of?(Regexp)
       my_each { |k| return false unless arg.match(k) }
+      elsif !arg.nil? && (arg.is_a? Numeric)
+      my_each { |k| return false if k.numeric != arg }
     else
       my_each { |k| return false if k != arg }
     end
@@ -113,7 +115,7 @@ module Enumerable
     end
     count
   end
-end
+
 
 # my_map
 
@@ -145,6 +147,7 @@ def my_inject(arg = nil, sym = nil)
     my_each { |elt| arg = arg.nil? ? elt : yield(arg, elt) }
   end
   arg
+end
 end
 
 def multiply_els(arr_)
