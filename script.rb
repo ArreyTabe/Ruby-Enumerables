@@ -56,7 +56,7 @@ module Enumerable
       my_each { |k| return false if k.class != arg }
     elsif !arg.nil? && arg.instance_of?(Regexp)
       my_each { |k| return false unless arg.match(k) }
-      elsif !arg.nil? && (arg.is_a? Numeric)
+    elsif !arg.nil? && (arg.is_a? Numeric)
       my_each { |k| return false if k.numeric != arg }
     else
       my_each { |k| return false if k != arg }
@@ -116,38 +116,37 @@ module Enumerable
     count
   end
 
+  # my_map
 
-# my_map
+  def my_map(proc = nil)
+    return to_enum(:my_map) unless block_given?
 
-def my_map(proc = nil)
-  return to_enum(:my_map) unless block_given?
+    new_array = []
+    arr_ = to_a
 
-  new_array = []
-  arr_ = to_a
+    if proc.nil?
 
-  if proc.nil?
+      arr_.my_each { |i| new_array << yield(i) }
+    else
+      arr_.my_each { |i| new_array << proc.call(i) }
 
-    arr_.my_each { |i| new_array << yield(i) }
-  else
-    arr_.my_each { |i| new_array << proc.call(i) }
-
-  end
-  new_array
-end
-
-def my_inject(arg = nil, sym = nil)
-  if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
-    sym = arg
-    arg = nil
+    end
+    new_array
   end
 
-  if !block_given? && !sym.nil?
-    my_each { |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
-  else
-    my_each { |elt| arg = arg.nil? ? elt : yield(arg, elt) }
+  def my_inject(arg = nil, sym = nil)
+    if (arg.is_a?(Symbol) || arg.is_a?(String)) && (!arg.nil? && sym.nil?)
+      sym = arg
+      arg = nil
+    end
+
+    if !block_given? && !sym.nil?
+      my_each { |elt| arg = arg.nil? ? elt : arg.send(sym, elt) }
+    else
+      my_each { |elt| arg = arg.nil? ? elt : yield(arg, elt) }
+    end
+    arg
   end
-  arg
-end
 end
 
 def multiply_els(arr_)
