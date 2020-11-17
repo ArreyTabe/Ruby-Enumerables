@@ -47,7 +47,7 @@ module Enumerable
 
   def my_all?(arg = nil)
     if block_given?
-      my_each { |el| return false if yield(el) == false }
+      my_each { |elt| return false if yield(elt) == false }
 
       return true
     elsif arg.nil?
