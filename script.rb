@@ -151,10 +151,4 @@ def multiply_els(arr_)
   end
 end
 
-(1..3).my_each { |x| p x }
 
-{ 1 => 1, 2 => 2, 3 => 3 }.each { |x| puts x }
-
-(1..6).my_select { |x| p x > 3 }
-
-p (1..3).my_all?
