@@ -1,38 +1,38 @@
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
-
+    arr_ = to_a
     i = 0
     until i == size
-      yield self[i]
-
+      yield arr_.to_a[i]
+   
       i += 1
     end
-    self
+    arr_
   end
 
   # my_each_with_index
 
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
-
+    arr = to_a
     i = 0
     until i == size
-      yield(self[i], i)
+      yield(  arr [i], i)
       i += 1
     end
-    self
+    arr 
   end
 
   # my_select
 
   def my_select
     return to_enum(:my_select) unless block_given?
-
     selected_array = []
+    arr = to_a
     i = 0
     until i == size
-      selected_array << self[i] if yield(self[i])
+      selected_array << arr[i] if yield(arr[i])
       i += 1
     end
     selected_array
@@ -43,6 +43,7 @@ module Enumerable
   def my_all?(arg = nil)
     if block_given?
       my_each { |el| return false if yield(el) == false }
+
       return true
     elsif arg.nil?
       my_each { |k| return false if k.nil? || k == false }
@@ -146,3 +147,11 @@ def multiply_els(arr_)
     accum * el
   end
 end
+
+(1..3).my_each {|x| p x}
+
+{1=>1, 2=>2, 3=> 3}.each {|x| puts x}
+
+(1..6).my_select {|x| p x>3}
+
+p (1..3).my_all?
