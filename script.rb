@@ -66,19 +66,19 @@ module Enumerable
 
   def my_any?(arg = nil)
     if block_given?
-      my_each { |el| return true if yield(el) }
+      my_each { |elt| return true if yield(elt) }
       return false
     end
-    arg.nil? ? arg.class.to_s : my_any? { |el| el }
+    arg.nil? ? arg.class.to_s : my_any? { |elt| elt }
 
     if arg.class.to_s == 'Class'
-      my_each { |el| return true if el.is_a? arg }
+      my_each { |elt| return true if elt.is_a? arg }
     elsif arg.class.to_s == 'Regexp'
       my_each { |el| return true if el =~ arg }
     elsif arg.nil?
-      each { |el| return true if el }
+      each { |elt| return true if elt }
     else
-      my_each { |el| return true if el == arg }
+      my_each { |elt| return true if elt == arg }
     end
     false
   end
@@ -95,7 +95,7 @@ module Enumerable
     count = 0
     if block_given?
       my_each do |ele|
-        count += 1 if yield(ele)
+        count += 1 if yield(elt)
       end
       count
 
@@ -107,7 +107,7 @@ module Enumerable
       count
     elsif arg.length.zero? && !block_given?
       count = 0
-      my_each do |_ele|
+      my_each do |_elt|
         count += 1
       end
     end
