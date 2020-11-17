@@ -2,14 +2,16 @@ module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
 
-    arr_ = to_a
+    arr = self
+    arr = arr.to_a if arr.instance_of?(Range)
+    arr = arr.to_a if arr.instance_of?(Hash)
     i = 0
     until i == size
-      yield arr_.to_a[i]
+      yield arr[i]
 
       i += 1
     end
-    arr_
+    arr
   end
 
   # my_each_with_index
@@ -17,7 +19,7 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
 
-    arr = to_a
+    arr = self
     i = 0
     until i == size
       yield(arr [i], i)
