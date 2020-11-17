@@ -94,7 +94,7 @@ module Enumerable
   def my_count(*arg)
     count = 0
     if block_given?
-      my_each do |ele|
+      my_each do |elt|
         count += 1 if yield(elt)
       end
       count
