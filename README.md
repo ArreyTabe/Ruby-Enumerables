@@ -76,7 +76,7 @@ To get a local copy of this repository up and running follow these simple steps:
 ### Install
 
 - Go to your preferred directory
-- Run git clone git@github.com:wintan1418/RUBY-PROJECT-ENUMERABLES/.git command
+- Run `git clone git@github.com:wintan1418/RUBY-PROJECT-ENUMERABLES/.git` command
 
 ### Usage
 
