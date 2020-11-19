@@ -83,7 +83,7 @@ To get a local copy of this repository up and running follow these simple steps:
 - Open script.rb in any editor ofchoice
 
 ## Live Demo
-[script demo](https://repl.it/@ARREYAFFTABE/RubyEnumerable#main.rb)
+[script demo](https://repl.it/@ARREYAFFTABE/RUBY-PROJECT-ENUMERABLES)
 
 ## Contributors
 
