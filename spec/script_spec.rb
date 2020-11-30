@@ -64,6 +64,11 @@ describe Enumerable do
       end
   end
   describe "#my_count" do
-      
+    it "evalute the method" do
+        expect(arr.my_count).to eq(arr.my_count)
+    end
+    it "evaluate the my_count method" do
+        expect(arr.my_count(2)).to eq(arr.count(2))
+    end
   end
 end
