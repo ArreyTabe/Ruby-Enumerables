@@ -30,4 +30,26 @@ describe Enumerable do
       expect(astring.my_select { |n| n.length >= 4 }).to include('this', 'string')
     end
   end
+  describe '#my_all?' do
+    it 'iterates a collection and checks the condition within a given block' do
+      expect(%w[ant bear cat].all? { |word| word.length >= 3 }).not_to eq(false)
+    end
+    it 'checks if items in a collection are numeric' do
+      expect([1i, 2, 3.14].all?(Numeric)).to eq(true)
+    end
+    it 'checks if the items are the same type' do
+      expect([nil, 99, false]).to_not eq(Integer)
+    end
+  end
+  describe '#my_any?' do
+    it 'iterates a collection and checks the condition within a given block' do
+      expect(%w[is almost done].my_any? { |n| n.length > 4 }).to eq(true)
+    end
+    it 'checks for any boolean type' do 
+      expect([true, 44, 'yes'].my_any?).to eq(true)
+    end
+    it 'checks if there are elements in the Array' do
+      expect([].my_any?).to eq([].any?)
+    end
+  end
 end
