@@ -154,5 +154,3 @@ def multiply_els(arr_)
     accum * el
   end
 end
-
-[2, 3, 4, 5].my_each_with_index {|n, i| p n, i}
