@@ -52,9 +52,10 @@ describe Enumerable do
       expect([].my_any?).to eq([].any?)
     end
   end
+
   describe "#my_none?" do
       it "check condition inside a block" do
-        expect(%w[dog goats hen].my_none? { |word| word.length == 5 }).to eq(%w[dog goats hen].none? { |word| word.length == 5 })
+        expect(astring.my_none? { |word| word.length == 5 }).to eq(astring.none? { |word| word.length == 5 })
       end
       it 'check if one of the elements is equal to the specified class' do
         expect([1, 3.14, 42].my_none?(Float)).to eq([1, 3.14, 42].none?(Float))
@@ -63,6 +64,7 @@ describe Enumerable do
         expect([].my_none?).to eq([].none?)
       end
   end
+  
   describe "#my_count" do
     it "evalute the method" do
         expect(arr.my_count).to eq(arr.my_count)
@@ -71,6 +73,7 @@ describe Enumerable do
         expect(arr.my_count(2)).to eq(arr.count(2))
     end
   end
+
   describe "#my_map" do
       it "loops through an array and returns return new array with the mapped element" do
           expect(range.my_map {|i| i * 3 }).to eq(range.map { |i| i * 3})
@@ -79,4 +82,5 @@ describe Enumerable do
         expect(range.my_map { 'cat' }).to eq(range.map { 'cat' })
       end
   end
+
 end
