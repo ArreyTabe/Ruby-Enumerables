@@ -9,16 +9,25 @@ describe Enumerable do
     it 'iterates through each item in the collection if block is given returns enum otherwise' do
       expect(arr.my_each).to be_instance_of(Enumerator)
       expect(hash.my_each).to be_instance_of(Enumerator)
-      expect(arr.my_each {|n| n }).to be_instance_of(Array)
+      expect(arr.my_each { |n| n }).to be_instance_of(Array)
       expect(range.my_each { |n| n * 2 }).not_to be_instance_of(Array)
     end
   end
-  describe "#my_each_with_index" do
-      it "Iterate through the elements in a collection and returns the elements with its index if block is given, otherwise it returns the Enum" do
-       expect(arr.my_each_with_index).to_not be_instance_of(Array)
-       expect(astring.my_each_with_index).to be_instance_of(Enumerator) 
-       expect(astring.my_each_with_index { |x, y| puts x, y }).not_to eql({ "this" => 0, "is" => 1, "a" => 2, "string" => 3  })
-       expect([astring, 'uchenna'].my_each_with_index(3) { |e, i| puts e, i }).to raise_error(ArgumentError)
-       end
+  describe '#my_each_with_index' do
+    it 'Iterate through the elements in a collection and returns the elements with its index if block is given, otherwise it returns the Enum' do
+      expect(arr.my_each_with_index).to_not be_instance_of(Array)
+      expect(astring.my_each_with_index).to be_instance_of(Enumerator)
+      expect(astring.my_each_with_index { |x, y| puts x, y }).not_to eql({ 'this' => 0, 'is' => 1, 'a' => 2, 'string' => 3 })
+      # expect([astring, 'uchenna'].my_each_with_index(3) { |e, i| puts e, i }).to raise_error(ArgumentError)
     end
+  end
+  describe '#my_select' do
+    it 'selects all elements for which given block returns true, returns enum if no block given' do
+      expect(arr.my_select).to_not be_instance_of(Array)
+      expect(arr.my_select).to be_instance_of(Enumerator)
+      expect(arr.my_select(&:odd?)).to be_eql([1, 3])
+      expect(arr.my_select(&:even?)).to_not include(1)
+      expect(astring.my_select { |n| n.length >= 4 }).to include('this', 'string')
+    end
+  end
 end
