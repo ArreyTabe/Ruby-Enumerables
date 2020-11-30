@@ -71,4 +71,12 @@ describe Enumerable do
         expect(arr.my_count(2)).to eq(arr.count(2))
     end
   end
+  describe "#my_map" do
+      it "loops through an array and returns return new array with the mapped element" do
+          expect(range.my_map {|i| i * 3 }).to eq(range.map { |i| i * 3})
+      end
+      it 'returns array with new results' do
+        expect(range.my_map { 'cat' }).to eq(range.map { 'cat' })
+      end
+  end
 end
