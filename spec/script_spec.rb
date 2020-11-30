@@ -54,7 +54,7 @@ describe Enumerable do
   end
   describe "#my_none?" do
       it "check condition inside a block" do
-        expect(%w[ant bear cat].my_none? { |word| word.length == 5 }).to eq(%w[ant bear cat].none? { |word| word.length == 5 })
+        expect(%w[dog goats hen].my_none? { |word| word.length == 5 }).to eq(%w[dog goats hen].none? { |word| word.length == 5 })
       end
       it 'check if one of the elements is equal to the specified class' do
         expect([1, 3.14, 42].my_none?(Float)).to eq([1, 3.14, 42].none?(Float))
@@ -62,5 +62,8 @@ describe Enumerable do
       it 'check if the array is empty' do
         expect([].my_none?).to eq([].none?)
       end
+  end
+  describe "#my_count" do
+      
   end
 end
