@@ -54,6 +54,9 @@ We are tasked to implement our own Ruby Enumerables, these enumerables include:
 
 </div>
 
+## Additional tasks done
+**Creates test files for all the enumerable methods above**
+
 
 ## Built With
 
@@ -98,6 +101,11 @@ To get a local copy of this repository up and running follow these simple steps:
 - GitHub: [@wintan1418](https://github.com/wintan1418)
 - Twitter: [@juwonoluwadare](https://twitter.com/oluwadarejuwon)
 - LinkedIn: [Oluwadare Juwon](https://www.linkedin.com/in/oluwadare-juwon-048a391a8/)
+
+**Joined during testing**
+- Github: [uchennaanya](https://github.com/uchennaanya)
+- Twitter:[@matinsanya19](https://twitter.com/martinsanya19)
+- Linkedin: [Uchenna Martin Anya](https://www.linkedin.com/in/uchenna-anya/)
 
 ## Show your support
 
