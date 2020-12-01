@@ -14,11 +14,11 @@ describe Enumerable do
     end
   end
   describe '#my_each_with_index' do
-    it 'Iterate through the elements in a collection and returns the elements with its index if block is given, otherwise it returns the Enum' do
+    it 'Iterate the elements in a collection and returns elements with index if block, otherwise returns Enum' do
       expect(arr.my_each_with_index).to_not be_instance_of(Array)
       expect(astring.my_each_with_index).to be_instance_of(Enumerator)
-      expect(astring.my_each_with_index { |x, y| puts x, y }).not_to eql({ 'this' => 0, 'is' => 1, 'a' => 2, 'string' => 3 })
-      # expect([astring, 'uchenna'].my_each_with_index(3) { |e, i| puts e, i }).to raise_error(ArgumentError)
+      expect(astring.my_each_with_index { |x, y| puts x, y }).not_to eql({ 'this' => 0, 'is' => 1, 'a' => 2 })
+      expect([astring, 'uchenna'].my_each_with_index(3) { |e, i| puts e, i }).to raise_error(ArgumentError)
     end
   end
   describe '#my_select' do
@@ -109,7 +109,7 @@ describe Enumerable do
       expect(ary.my_count(2)).to eq(2)
     end
     it 'runs loops through a collection' do
-      expect(ary.my_count { |x| x.even? }).to eq(3)
+      expect(ary.my_count(&:even?)).to eq(3)
     end
   end
   describe '#multiply_else' do
